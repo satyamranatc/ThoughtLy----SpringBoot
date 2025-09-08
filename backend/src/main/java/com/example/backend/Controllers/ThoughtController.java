@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.Models.ThoughtModel;
+import com.example.backend.Models.UserModel;
 import com.example.backend.Repository.ThoughtRepo;
-
-
+import com.example.backend.Repository.UserRepo;
 
 @RestController
 @CrossOrigin("*")
@@ -24,20 +24,33 @@ public class ThoughtController {
     @Autowired
     ThoughtRepo ThoughtRepo;
 
+    @Autowired
+    UserRepo userRepo;
+
     @GetMapping("/all")
-    public List <ThoughtModel> getAllThoughts() {
+    public List<ThoughtModel> getAllThoughts() {
         return ThoughtRepo.findAll();
     }
+
     @GetMapping("/by/{id}")
-    public List <ThoughtModel> getThoughtsBy(@PathVariable Long id) {
-        List <ThoughtModel> thoughts = ThoughtRepo.findAll();
-        thoughts.removeIf(thought -> !thought.getAuthor().getId().equals(id));
+    public List<ThoughtModel> getThoughtsBy(@PathVariable Long id) {
+        List<ThoughtModel> thoughts = ThoughtRepo.findAll();
+        thoughts.removeIf(thought -> !thought.getThoughtAuthor().getId().equals(id));
         return thoughts;
     }
 
     @PostMapping("/add")
     public ThoughtModel addThought(@RequestBody ThoughtModel newThought) {
+
+        Long authorId = newThought.getAuthor();
+
+        UserModel existingUser = userRepo.findById(authorId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        newThought.setThoughtAuthor(existingUser);
         ThoughtRepo.save(newThought);
+
         return newThought;
-    } 
+
+    }
 }

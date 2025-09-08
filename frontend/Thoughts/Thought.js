@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     
     let userData = JSON.parse(localStorage.getItem("userData"));
-    console.log("hello");
    
     if(userData == null)
    {

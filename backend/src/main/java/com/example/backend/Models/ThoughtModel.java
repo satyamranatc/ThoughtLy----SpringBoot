@@ -15,11 +15,13 @@ public class ThoughtModel {
     // Each thought belongs to one user (Many thoughts -> One user)
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)  // foreign key in DB
-    private UserModel author;
+    UserModel ThoughtAuthor;
+
+    Long author;
 
     public ThoughtModel() {}
 
-    public ThoughtModel(String thoughtTitle, String thoughtText, UserModel author) {
+    public ThoughtModel(String thoughtTitle, String thoughtText, Long author) {
         this.thoughtTitle = thoughtTitle;
         this.thoughtText = thoughtText;
         this.author = author;
@@ -46,11 +48,18 @@ public class ThoughtModel {
         this.thoughtText = thoughtText;
     }
 
-    public UserModel getAuthor() {
+    public Long getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserModel author) {
+    public void setAuthor(Long author) {
         this.author = author;
+    }
+
+    public UserModel getThoughtAuthor() {
+        return ThoughtAuthor;
+    }
+    public void setThoughtAuthor(UserModel ThoughtAuthor) {
+        this.ThoughtAuthor = ThoughtAuthor;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.backend.Models;
 
-import jakarta.annotation.Generated;
+
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class UserModel {
     private String avatar;
     private String username;
     private String password;
+
     
     public UserModel(String name, String avatar, String username, String password) {
         this.name = name;
